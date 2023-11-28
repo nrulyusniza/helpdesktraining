@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -48,5 +49,19 @@ class HomeController extends Controller
     {
         
         return view('myextension', compact('severitys', 'statuss', 'req_categorys', 'reactions', 'types'));
+    }
+
+    public function destroy(Request $request)
+    {
+        /*Auth::logout();
+
+        return redirect()->route('welcome');*/
+
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+
     }
 }

@@ -45,6 +45,22 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('pages/assets/js/config.js') }}"></script>
+
+    <!-- DataTables -->
+    <link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.css" rel="stylesheet">
+
+    <!-- sweetalert -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" 
+            integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" 
+          integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" 
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Laravel Notify -->
+    @notifyCss
   </head>
 
   <body>
@@ -56,7 +72,7 @@
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="{{ route('mydashboard') }}" class="app-brand-link">
-              <img src="{{ asset('pages/assets/img/favicon/favicon_atm.png') }}" />
+              <img src="{{ asset('pages/assets/img/favicon/atm.svg') }}" />
               <!--
               <span class="app-brand-logo demo">
                 <svg
@@ -117,6 +133,7 @@
 
           <div class="menu-inner-shadow"></div>
 
+          @if(Auth::user()->role_id=='1')
           <ul class="menu-inner py-1">
             <!-- 1- Dashboard -->
             <li class="menu-item active">
@@ -137,15 +154,21 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="{{ route('home') }}" class="menu-link">
+              <a href="{{ route('tickets.allconsumable') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Consumables [x]</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="{{ route('home') }}" class="menu-link">
+              <a href="{{ route('tickets.allticket') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Ticket [x]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{{ route('ticstatuss.allticstatus') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Ticket Status [x]</div>
               </a>
             </li>
 
@@ -225,6 +248,196 @@
             </li>
 
           </ul>
+          @endif
+
+          @if(Auth::user()->role_id==2)
+          <ul class="menu-inner py-1">
+            <!-- 1- Dashboard -->
+            <li class="menu-item active">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Dashboard [--]</div>
+              </a>
+            </li>
+
+            <!-- 2- Issue Tracking -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Issue Tracking</span>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Request [x]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Consumables [x]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Ticket [x]</div>
+              </a>
+            </li>
+
+            <!-- 3- User & Asset Management -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">User &amp; Asset Management</span></li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Basic">User[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-compass"></i>
+                <div data-i18n="Basic">Asset[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user-pin"></i>
+                <div data-i18n="Basic">Reporting Person[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-category"></i>
+                <div data-i18n="Basic">Category[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-info-circle"></i>
+                <div data-i18n="Basic">Knowledge Base[P]</div>
+              </a>
+            </li>
+
+            <!-- 4 - Ticket Reporting -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Ticket Reporting</span></li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Tables">Last 7 Days [x]</div>
+              </a>
+            </li>
+
+          </ul>
+          @endif
+
+          @if(Auth::user()->role_id==3)
+          <ul class="menu-inner py-1">
+            <!-- 1- Dashboard -->
+            <li class="menu-item active">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Dashboard [--]</div>
+              </a>
+            </li>
+
+            <!-- 2- Issue Tracking -->
+            <li class="menu-header small text-uppercase">
+              <span class="menu-header-text">Issue Tracking</span>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Request [x]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Consumables [x]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-collection"></i>
+                <div data-i18n="Basic">Ticket [x]</div>
+              </a>
+            </li>
+
+            <!-- 3- User & Asset Management -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">User &amp; Asset Management</span></li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-group"></i>
+                <div data-i18n="Basic">User Groups[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Basic">User[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-compass"></i>
+                <div data-i18n="Basic">Asset[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-map-pin"></i>
+                <div data-i18n="Basic">Site</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user-pin"></i>
+                <div data-i18n="Basic">Reporting Person[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-category"></i>
+                <div data-i18n="Basic">Category[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-info-circle"></i>
+                <div data-i18n="Basic">Knowledge Base[P]</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user-pin"></i>
+                <div data-i18n="Basic">// Jadi, tak jadi //</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{{ route('kb') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user-pin"></i>
+                <div data-i18n="Basic">// KB Tak jadi nak bind//</div>
+              </a>
+            </li>
+
+            <!-- 4 - Ticket Reporting -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Ticket Reporting</span></li>
+            <li class="menu-item">
+              <a href="{{ route('home') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Tables">Last 7 Days [x]</div>
+              </a>
+            </li>
+            
+            <!-- 5 - Extension -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Extension</span></li>
+            <li class="menu-item">
+              <a href="{{ route('myextension') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-extension"></i>
+                <div data-i18n="Analytics">Extension [--]</div>
+              </a>
+            </li>
+
+          </ul>
+          @endif
         </aside>
         <!-- / Menu -->
 <!-- //------------------------------------------------------------------------------------------ -->
@@ -372,7 +585,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="javascript:void(0);">
+                    <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
@@ -467,5 +680,51 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <!-- DataTables JS -->
+    <!-- for Copy, Excel, PDF, Print & Search & Show N entries & Sorting & Showing N to N of N entries & Pagination --> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.6/b-2.4.2/b-html5-2.4.2/b-print-2.4.2/datatables.min.js"></script>
+
+    <script>
+      $(document).ready(function(){
+          $('#example').DataTable({
+            searching: true,
+            sorting:true,
+            buttons: ['copy', 'excel', 'pdf']
+          });
+      });
+    </script>
+
+    <!-- sweetalert JS -->
+    <script type="text/javascript">
+      function confirmation(ev) {
+        ev.preventDefault();
+        var urlToRedirect = ev.currentTarget.getAttribute('href');  
+        console.log(urlToRedirect);
+        swal({
+          title: "Are you sure to Delete this post",
+          text: "You will not be able to revert this!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+          })
+        .then((willCancel) => {
+          if (willCancel) {  
+            window.location.href = urlToRedirect;              
+          }
+        });
+      }
+    </script>
+
+    <!-- Toastr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" 
+            integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" 
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- Laravel Notify -->
+    <x:notify-messages />
+    @notifyJs         
   </body>
 </html>

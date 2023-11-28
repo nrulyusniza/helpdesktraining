@@ -17,4 +17,9 @@ class Equipment extends Model
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
+
+    public function equipmentlogs()
+    {
+        return $this->hasMany(Equipmentlog::class);
+    }
 }

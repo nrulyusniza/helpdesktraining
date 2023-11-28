@@ -44,7 +44,7 @@ class TypeController extends Controller
         Type::create($request->all());
    
         return redirect()->route('types.index')
-                        ->with('success','New Request Type created successfully.');
+                        ->with('message','New Request Type created successfully.');
     }
 
     /**

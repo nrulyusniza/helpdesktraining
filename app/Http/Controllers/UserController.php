@@ -42,9 +42,11 @@ class UserController extends Controller
         ]);
   
         User::create($request->all());
+
+        // Laravel Notify
+        notify()->success('New User created successfully.');
    
-        return redirect()->route('users.index')
-                        ->with('success','New User created successfully.');
+        return redirect()->route('users.index');
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Equipment;
+use App\Equipmentlog;
 use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
@@ -107,5 +108,36 @@ class EquipmentController extends Controller
         $equipments = Equipment::all();
   
         return view('equipments.allasset', compact('equipments'));
+    }
+
+    public function allassetedit(Equipment $equipment)
+    {
+        // Retrieve the equipment and its associated equipment logs
+        $equipment = Equipment::with('equipmentlogs')->findOrFail($equipment->id);
+
+        // Pass the equipment data to the view
+        return view('equipments.allassetedit', compact('equipment'));
+    }
+
+    public function allassetupdate(Request $request, Equipment $equipment)
+    {
+        // Validate the request data
+        $equipmentlog = new Equipmentlog();
+        $equipmentlog->asset_newlocation = $validateData['asset_newlocation'];
+
+        // Save the equipment log
+        $equipment->equipmentlogs()->save($equipmentlog);
+
+        // Redirect back
+        return redirect()->route('equipments.allassetedit', $equipment->id)
+        ->with('success','Equipment Log created successfully');
+    }
+
+    public function allassetlog(Equipment $equipment)
+    {
+        // Retrieve the equipment and its associated equipment logs
+        $equipment = Equipment::with('equipmentlogs')->findOrFail($equipment->id);
+  
+        return view('equipments.allassetlog', compact('equipments'));
     }
 }

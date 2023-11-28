@@ -43,8 +43,7 @@ class ReportingpersonController extends Controller
   
         Reportingperson::create($request->all());
    
-        return redirect()->route('reportingpersons.index')
-                        ->with('success','New Reporting Person created successfully.');
+        return back()->with('message','New Reporting Person created successfully.');
     }
 
     /**

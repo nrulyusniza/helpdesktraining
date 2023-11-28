@@ -36,14 +36,12 @@
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="basic-default-name">Request Type</label>
                     <div class="col-sm-10">
-                    <div class="col-sm-10">
                         <select id="defaultSelect" class="form-select" name="kb_category">
                             <option selected disabled>-- Select Request Type--</option>
                                 @foreach(App\Type::all() as $type)
                                 <option value="{{$type->id}}">{{$type->request_type}}</option>
                                 @endforeach
                         </select>
-                    </div>
                     </div>
                 </div>
                 <div class="row mb-3">

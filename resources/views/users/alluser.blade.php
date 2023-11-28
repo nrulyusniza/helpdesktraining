@@ -48,7 +48,7 @@
         <!-- Table -->
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="example">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -72,7 +72,7 @@
                                     <a class="menu-icon tf-icons bx bx-edit" href="{{ route('users.edit',$u->id) }}"></a>                
                                     @csrf
                                     @method('DELETE')                    
-                                    <a type="submit" class="menu-icon tf-icons bx bx-trash" style="color:#ff0000"></a>
+                                    <a type="submit" class="menu-icon tf-icons bx bx-trash" style="color:#ff0000" onclick="confirmation(event)"></a>
                                 </form>
                             </td>
                         </tr>

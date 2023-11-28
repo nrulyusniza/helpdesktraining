@@ -21,6 +21,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// logout
+Route::get('/logout', 'HomeController@destroy')->name('logout');
+
 // super admin's dashboard
 Route::get('/mydashboard', 'HomeController@mydashboard')->name('mydashboard');
 
@@ -77,6 +80,11 @@ Route::get('equipments/{equipment}/edit', 'EquipmentController@edit')->name('equ
 Route::put('equipments/{equipment}', 'EquipmentController@update')->name('equipments.update');
 Route::delete('equipments/{equipment}', 'EquipmentController@destroy')->name('equipments.destroy');
 Route::get('equipments/allasset', 'EquipmentController@allasset')->name('equipments.allasset');
+Route::get('equipments/allassetlog', 'EquipmentController@allassetlog')->name('equipments.allassetlog');
+
+
+Route::get('equipments/{equipment}/allassetedit', 'EquipmentController@allassetedit')->name('equipments.allassetedit');
+Route::put('equipments/{equipment}', 'EquipmentController@allassetupdate')->name('equipments.allassetupdate');
 
 // rp path - super admin view
 Route::get('reportingpersons/index', 'ReportingpersonController@index')->name('reportingpersons.index');
@@ -157,6 +165,21 @@ Route::get('reactions/{reaction}/edit', 'ReactionController@edit')->name('reacti
 Route::put('reactions/{reaction}', 'ReactionController@update')->name('reactions.update');
 Route::delete('reactions/{reaction}', 'ReactionController@destroy')->name('reactions.destroy');
 Route::get('reactions/responsetype', 'ReactionController@allresponsetype')->name('reactions.allresponsetype');
+
+// ticket status
+Route::get('ticstatuss/index', 'TicstatusController@index')->name('ticstatuss.index');
+Route::get('ticstatuss/allticstatus', 'TicstatusController@allticstatus')->name('ticstatuss.allticstatus');
+
+// ticket & consumable
+Route::get('tickets/index', 'TicketController@index')->name('tickets.index');
+Route::get('tickets/allticket', 'TicketController@allticket')->name('tickets.allticket');
+
+Route::get('tickets/allconsumable', 'TicketController@allconsumable')->name('tickets.allconsumable');
+Route::get('tickets/{ticket}/allconsumableedit', 'TicketController@allconsumableedit')->name('tickets.allconsumableedit');
+Route::put('tickets/{ticket}', 'TicketController@allconsumableupdate')->name('tickets.allconsumableupdate');
+
+// Route::get('ticketlogs/{ticketlog}/allconsumableedit', 'TicketlogController@allconsumableedit')->name('ticketlogs.allconsumableedit');
+// Route::put('ticketlogs/{ticketlog}', 'TicketlogController@allconsumableupdate')->name('ticketlogs.allconsumableupdate');
 
 // ----------------------------------------------------------------------
 Route::get('/tab1', function () {

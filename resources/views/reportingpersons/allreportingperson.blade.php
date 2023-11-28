@@ -55,4 +55,16 @@
 </div>
 <!--/ Hoverable Table rows -->
 
+@if (Session::has('message'))
+            <script>
+              toastr.options = {
+                "progressBar" : true,
+                "closeButton" : true,
+              }
+              toastr.success("{{ Session::get('message') }}"), 'Success!',{timeOut:12000});
+              toastr.info("{{ Session::get('message') }}");
+              toastr.warning("{{ Session::get('message') }}");
+              toastr.error("{{ Session::get('message') }}");
+              </script>
+              @endif
 @endsection

@@ -37,7 +37,12 @@
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="basic-default-name">Request Type</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="request_type" value="{{ $issue->type->request_type }}" readonly>
+                        <select id="defaultSelect" class="form-select" name="request_type">
+                            <option selected disabled>-- Select Request Type --</option>
+                                @foreach(App\Type::all() as $type)
+                                <option value="{{$type->id}}">{{$type->request_type}}</option>
+                                @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -72,8 +77,13 @@
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="basic-default-name">Equipment</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="asset_hostname" name="asset_type" value="{{ $issue->equipment->asset_hostname }} - {{ $issue->equipment->asset_type }}" readonly>
+                    <div class="col-sm-10">   
+                        <select id="defaultSelect" class="form-select" name="asset_hostname">
+                            <option selected disabled>-- Select Equipment --</option>
+                                @foreach(App\Equipment::all() as $equipment)
+                                <option value="{{ $equipment->asset_hostname .'-'. $equipment->asset_type }}">{{ $equipment->asset_hostname }} - {{ $equipment->asset_type }}</option>
+                                @endforeach
+                        </select>                    
                     </div>
                 </div>
                 <div class="row mb-3">

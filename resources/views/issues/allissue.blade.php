@@ -52,6 +52,7 @@
                     <td>{{ $i->created_by }}</td>
                     <td>
                         <form action="{{ route('issues.destroy',$i->id) }}" method="POST">
+                            <!-- <a class="menu-icon tf-icons bx bx-printer" style='color:#716d6d' href=""></a> -->
                             <a class="menu-icon tf-icons bx bx-edit" href="{{ route('issues.edit',$i->id) }}"></a>                
                             @csrf
                             @method('DELETE')                    
